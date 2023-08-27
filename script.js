@@ -102,6 +102,7 @@ document.addEventListener('DOMContentLoaded', function(){
     
         endButton.addEventListener('click', function() {
         console.log(`${playerName} ${selectedResults['gr']} ${selectedResults['hu']} ${selectedResults['re']} ${selectedResults['sl']}`);
+        alert("설문조사가 끝났습니다")
     });
 });
 
