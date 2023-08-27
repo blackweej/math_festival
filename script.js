@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function(){
         'sl': 0
     };
     
-     let playerName = ""; // 이름을 저장할 변수
+     let playerName = "";
     playerName = prompt("이름을 입력하세요:");
     
    const questions = [
@@ -80,11 +80,8 @@ document.addEventListener('DOMContentLoaded', function(){
             choicesContainer.appendChild(choiceBox);
 
             choiceBox.addEventListener('click', function() {
-                // 기존에 선택되었던 선택지의 배경색 초기화
                 boxes.forEach(box => box.style.backgroundColor = "white");
-
-                // 선택한 선택지의 배경색 변경
-                choiceBox.style.backgroundColor = "#6CDF65";
+                choiceBox.style.backgroundColor = "#B4B4C8"; //색깔변경
 
                 const selectedResult = results[i][j];
                 selectedResults[selectedResult]++;
@@ -94,15 +91,21 @@ document.addEventListener('DOMContentLoaded', function(){
         sectionsContainer.appendChild(section);
     }
 
-    const endButton = document.createElement('button'); // "end" 버튼 생성
+    const endButton = document.createElement('button');
     endButton.textContent = "end";
     endButton.style.marginTop = "10px";
     endButton.style.fontSize = "25px";
     sectionsContainer.appendChild(endButton);
     
-        endButton.addEventListener('click', function() {
+  endButton.addEventListener('click', function() {
+        for (const result in selectedResults) {
+            if (selectedResults[result] === 0) {
+                alert("모든 질문에 답해주세요.");
+                return;
+            }
+        }
         console.log(`${playerName} ${selectedResults['gr']} ${selectedResults['hu']} ${selectedResults['re']} ${selectedResults['sl']}`);
-        alert("설문조사가 끝났습니다")
+        alert("설문조사가 끝났습니다.");
     });
 });
 
