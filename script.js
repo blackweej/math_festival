@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
             choiceBox.addEventListener('click', function() {
                 boxes.forEach(box => box.style.backgroundColor = "white");
-                choiceBox.style.backgroundColor = "#B4B4C8"; //색깔변경
+                choiceBox.style.backgroundColor = "#6CDF65"; //색깔변경
 
                 const selectedResult = results[i][j];
                 selectedResults[selectedResult]++;
