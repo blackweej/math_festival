@@ -291,82 +291,81 @@
             };
 
             endButton.addEventListener('click', () => {
-                const allRadioButtons = document.querySelectorAll('.custom-radio input[type="radio"]:checked');
-                const totalQuestionCount = questionsContainer.length;
+        const allRadioButtons = document.querySelectorAll('.custom-radio input[type="radio"]:checked');
+        const totalQuestionCount = questionsContainer.length;
 
-                if (allRadioButtons.length < totalQuestionCount) {
-                    alert('모든 질문에 답하지 않았습니다.');
-                    return;
-                }
+        if (allRadioButtons.length < totalQuestionCount) {
+            alert('모든 질문에 답하지 않았습니다.');
+            return;
+        }
 
-                allRadioButtons.forEach(radioButton => {
-                    const value = radioButton.value;
-                    selectedCounts[value.substring(0, 2)]++;
-                });
+        allRadioButtons.forEach(radioButton => {
+            const value = radioButton.value;
+            selectedCounts[value.substring(0, 2)]++;
+        });
 
-                const userName = nameInput.value;
-                console.log(`이름: ${userName}`);
+        const userName = nameInput.value;
+        console.log(`이름: ${userName}`);
 
-                console.log(`${selectedCounts.gr} ${selectedCounts.hu} ${selectedCounts.re} ${selectedCounts.sl}`);
+        // 설문 데이터를 객체로 생성
+        const surveyData = {
+            name: userName,
+            answer1: selectedCounts.sl,
+            answer2: selectedCounts.re,
+            answer3: selectedCounts.hu,
+            answer4: selectedCounts.gr,
+            // 나머지 설문 항목에 대한 데이터도 추가
+        };
 
-                // Display alert and reset after displaying results
-                alert('설문조사가 끝났습니다.');
-                
-                const formData = {
-                        name: userName,
-                        answer1: selectedCounts.sl,
-                        answer2: selectedCounts.re,
-                        answer3: selectedCounts.hu,
-                        answer4: selectedCounts.gr
-                        // 다른 질문에 대한 선택도 위와 같이 추가
-                    };
+        // Flask 서버 주소 설정
+        const serverUrl = 'http://your-server-url.com/submit_survey'; // 실제 서버 주소로 변경해야 합니다.
 
+        // POST 요청 보내기
+        fetch(serverUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(surveyData)
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('설문조사가 성공적으로 제출되었습니다.');
+            } else {
+                alert('설문조사 제출에 실패했습니다.');
+            }
+        })
+        .catch(error => {
+            console.error('오류 발생:', error);
+            alert('오류가 발생했습니다.');
+        });
 
-                    const serverUrl = 'http://math-festival-xmkrr.run.goorm.site/submit_survey';
+        // 설문조사 완료 후 입력값 초기화
+        allRadioButtons.forEach(radioButton => {
+            radioButton.checked = false;
+        });
+        nameInput.value = '';
 
-                    // 서버로 데이터를 보냄
-                    fetch('severUrl', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(formData)
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log('서버에서 받은 응답:', data);
-                    })
-                    .catch(error => {
-                        console.error('오류:', error);
-                    });
+    });
 
-                setTimeout(() => {
-                    allRadioButtons.forEach(radioButton => {
-                        radioButton.checked = false;
-                    });
-                    nameInput.value = ''; // Clear the name input
-                    console.log("Selections reset.");
-                }, 1000); // Reset after 1 second (adjust as needed)
-            });
+    questionsContainer.forEach(question => {
+        const radioButtons = question.querySelectorAll('input[type="radio"]');
 
-            questionsContainer.forEach(question => {
-                const radioButtons = question.querySelectorAll('input[type="radio"]');
+        radioButtons.forEach(radioButton => {
+            radioButton.addEventListener('click', () => {
+                const name = radioButton.name;
+                const selectedRadios = document.querySelectorAll(`input[type="radio"][name="${name}"]:checked`);
 
-                radioButtons.forEach(radioButton => {
-                    radioButton.addEventListener('click', () => {
-                        const name = radioButton.name;
-                        const selectedRadios = document.querySelectorAll(`input[type="radio"][name="${name}"]:checked`);
-
-                        // Uncheck other radio buttons in the same question
-                        radioButtons.forEach(otherRadioButton => {
-                            if (otherRadioButton !== radioButton) {
-                                otherRadioButton.checked = false;
-                            }
-                        });
-                    });
+                // 다른 라디오 버튼 선택 해제
+                radioButtons.forEach(otherRadioButton => {
+                    if (otherRadioButton !== radioButton) {
+                        otherRadioButton.checked = false;
+                    }
                 });
             });
         });
+    });
+});
     </script>
 </body>
 </html>
