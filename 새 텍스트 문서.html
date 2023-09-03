@@ -278,19 +278,19 @@
     <button id="endButton">END</button>
     
         <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const questionsContainer = document.querySelectorAll('[name="question1"]');
-            const endButton = document.getElementById('endButton');
-            const nameInput = document.getElementById('name');
+document.addEventListener("DOMContentLoaded", function() {
+    const questionsContainer = document.querySelectorAll('[name="question1"]');
+    const endButton = document.getElementById('endButton');
+    const nameInput = document.getElementById('name');
 
-            const selectedCounts = {
-                sl: 0,
-                re: 0,
-                hu: 0,
-                gr: 0
-            };
+    const selectedCounts = {
+        sl: 0,
+        re: 0,
+        hu: 0,
+        gr: 0
+    };
 
-            endButton.addEventListener('click', () => {
+    endButton.addEventListener('click', () => {
         const allRadioButtons = document.querySelectorAll('.custom-radio input[type="radio"]:checked');
         const totalQuestionCount = questionsContainer.length;
 
