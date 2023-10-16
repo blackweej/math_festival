@@ -346,24 +346,9 @@ document.addEventListener("DOMContentLoaded", function() {
         });
         nameInput.value = '';
 
+        location.reload();
     });
-
-    questionsContainer.forEach(question => {
-        const radioButtons = question.querySelectorAll('input[type="radio"]');
-
-        radioButtons.forEach(radioButton => {
-            radioButton.addEventListener('click', () => {
-                const name = radioButton.name;
-                const selectedRadios = document.querySelectorAll(`input[type="radio"][name="${name}"]:checked`);
-
-                // 다른 라디오 버튼 선택 해제
-                radioButtons.forEach(otherRadioButton => {
-                    if (otherRadioButton !== radioButton) {
-                        otherRadioButton.checked = false;
-                    }
-                });
-            });
-        });
+    );
     });
 });
     </script>
